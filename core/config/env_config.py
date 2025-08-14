@@ -22,5 +22,6 @@ ENV_VARIABLES = {
     "REFRESH_TOKEN_SECRET": os.getenv("REFRESH_TOKEN_SECRET"),
     "REFRESH_TOKEN_EXPIRY": os.getenv("REFRESH_TOKEN_EXPIRY"),
     "DJANGO_ENV": os.getenv("DJANGO_ENV", "dev"),
+    "ANTHROPIC_API_KEY":os.getenv("ANTHROPIC_API_KEY")
 }
-print("print", env_file)
+print("print", ENV_VARIABLES)

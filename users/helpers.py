@@ -1,5 +1,5 @@
 import datetime
-from ..core.config.env_config import ENV_VARIABLES
+from core.config.env_config import ENV_VARIABLES
 import jwt
 def generate_token(is_refresh,user):
  

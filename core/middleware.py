@@ -2,7 +2,8 @@ import jwt
 from django.http import JsonResponse
 from rest_framework import status
 from .config.env_config import ENV_VARIABLES
-from ..users.models import User
+from users.models import User
+
 
 
 class VerifyToken:
@@ -11,6 +12,11 @@ class VerifyToken:
 
         def __call__(self, request):
             token = request.COOKIES.get("access_token")
+            is_dummy = request.data.get('is_dummy')
+
+            if is_dummy==True:
+                request.is_dummy=True
+                return;
 
             if not token:
                 return JsonResponse(

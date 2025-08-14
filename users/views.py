@@ -1,4 +1,4 @@
-from django.shortcuts import render
+
 from rest_framework.decorators import api_view
 from rest_framework import status
 from django.contrib.auth.hashers import check_password
@@ -7,7 +7,8 @@ from rest_framework.response import Response
 from .models import User
 import jwt
 import datetime
-from ..core.config.env_config import ENV_VARIABLES
+from core.config.env_config import ENV_VARIABLES
+
 from .helpers import generate_token
 
 
@@ -116,3 +117,14 @@ def refresh_token(request):
         return Response(
             {"error": "User not found"}, status=status.HTTP_401_UNAUTHORIZED
         )
+
+@api_view(['GET'])
+def user(request):
+    user = request.user
+
+    user_data = User.objects.get(id=user.id)
+
+    if not user_data:
+        Response({"error":"User not found"},status=status.HTTP_400_BAD_REQUEST)
+
+    Response({"message":"User not found","result":user_data},status=status.HTTP_200_OK)

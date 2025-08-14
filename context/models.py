@@ -12,7 +12,7 @@ class Daily_Context(models.Model):
         choices=SourceType.choices,
         max_length=60,
     )
-    content = models.CharField(max_length=255)
+    content = models.TextField()
     image = models.ImageField(upload_to="context_image/", blank=True, null=True)
     content_type = models.CharField(choices=ContentType.choices, max_length=100)
     time = models.DateTimeField()

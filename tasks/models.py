@@ -14,6 +14,13 @@ class Categories(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    user_id = models.ForeignKey(
+        "users.User", on_delete=models.CASCADE, related_name="categories",
+        blank=True,
+        null=True
+    )
+
+
     class Meta:
         db_table='categories'
 
@@ -26,21 +33,27 @@ class Tasks(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     priority = models.IntegerField(default=0)  # 0->high, 1-> medium, 2-> low
-    priority_reason = models.CharField(max_length=100)
+    priority_reason = models.CharField(max_length=100,blank=True,null=True)
     status = models.CharField(
         max_length=30, choices=TaskStatus.choices, default=TaskStatus.PENDING
     )
+    created_by = models.CharField(max_length=60,default='User')
+    is_finished= models.BooleanField(default=False)
+    finished_at = models.DateTimeField(blank=True,null=True)
     is_timely_finished = models.BooleanField(default=True)
     ai_generated_deadline = models.DurationField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     user_id = models.ForeignKey(
-        "users.User", on_delete=models.CASCADE, related_name="tasks"
+        "users.User", on_delete=models.CASCADE, related_name="tasks",
+        blank=True,null=True
     )
 
     category_id = models.OneToOneField(
-        Categories, on_delete=models.CASCADE, related_name="tasks"
+        Categories, on_delete=models.CASCADE, related_name="tasks",
+        blank=True,
+        null=True
     )
     recommendation_id = models.ForeignKey(
         'ai_module.Recommendation',
